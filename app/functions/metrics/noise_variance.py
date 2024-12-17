@@ -1,11 +1,12 @@
-import cv2
+import numpy as np
+from skimage.restoration import estimate_sigma
 
-def estimate_noise_variance(noisy_image):
+def noise_variance(image):
     """
-    Estimate the noise variance of an image.
-    noisy_image: Image with noise
+    Estimates the variance of Gaussian noise in an image.
+    Args:
+        image (numpy.ndarray): Input image (grayscale).
     """
-    # Convert to grayscale for simplicity
-    gray = cv2.cvtColor(noisy_image, cv2.COLOR_BGR2GRAY)
-    noise_std = np.std(gray)
-    return noise_std
+    image_normalized = image.astype(np.float32) / 255.0
+    sigma = estimate_sigma(image_normalized, channel_axis=None)
+    print(f"Noise Variance: {sigma**2:.2f}")

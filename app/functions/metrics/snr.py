@@ -1,18 +1,12 @@
 import numpy as np
 
-def calculate_snr(image, noisy_image):
+def snr(image, noise_sigma):
     """
-    Calculate the Signal-to-Noise Ratio (SNR).
-    image: Original clean image (ground truth)
-    noisy_image: Image with noise
-
-    
+    Calculates Signal-to-Noise Ratio (SNR).
+    Args:
+        image (numpy.ndarray): Input image (grayscale).
+        noise_sigma (float): Standard deviation of the noise.
     """
-    signal_power = np.mean(image.astype(np.float32) ** 2)
-    noise = noisy_image.astype(np.float32) - image.astype(np.float32)
-    noise_power = np.mean(noise ** 2)
-    
-    if noise_power == 0:
-        return float('inf')
-    snr = 10 * np.log10(signal_power / noise_power)
-    return snr
+    mean_signal = np.mean(image / 255.0)  # Normalize to [0, 1]
+    snr = 10 * np.log10(mean_signal**2 / (noise_sigma**2 + 1e-10))  # Avoid division by zero
+    print(f"SNR: {snr:.2f} dB")

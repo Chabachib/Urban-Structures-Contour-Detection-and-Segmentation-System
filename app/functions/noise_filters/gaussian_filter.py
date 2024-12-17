@@ -1,8 +1,7 @@
 import cv2
 import numpy as np
 
-def gaussian_filter(image: np.ndarray, kernel_size: int, sigma: float) -> tuple:
-    """
+"""
     Apply a Gaussian filter to an image and return the filtered image along with the Gaussian kernel.
 
     Parameters:
@@ -14,6 +13,8 @@ def gaussian_filter(image: np.ndarray, kernel_size: int, sigma: float) -> tuple:
     - filtered_image (np.ndarray): The image after applying the Gaussian filter.
     - kernel (np.ndarray): The Gaussian kernel used for filtering.
     """
+
+def gaussian_filter(image: np.ndarray, kernel_size: int, sigma: float) -> tuple:
     if kernel_size % 2 == 0 or kernel_size <= 1:
         raise ValueError("Kernel size must be an odd integer greater than 1")
 
