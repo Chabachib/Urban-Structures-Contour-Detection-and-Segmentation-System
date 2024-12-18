@@ -1,15 +1,30 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
-def type_contrast(image_path):
-    img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    hist = cv2.calcHist([img], [0], None, [256], [0, 256])
-    std_dev = np.std(img)
-
-    print(f"Standard Deviation (Contrast Metric): {std_dev:.2f}")
+def type_contrast(image):
+    """
+    Analyzes image contrast and returns histogram plot data
+    Args:
+        image (numpy.ndarray): Input grayscale image
+    Returns:
+        tuple: (standard deviation, figure, contrast_message)
+    """
+    # Calculate histogram
+    hist = cv2.calcHist([image], [0], None, [256], [0, 256])
+    std_dev = np.std(image)
+    
+    # Create histogram plot
+    fig = plt.figure(figsize=(6, 4))
+    plt.plot(hist)
+    plt.title('Histogram')
+    plt.xlabel('Pixel Intensity')
+    plt.ylabel('Frequency')
+    
+    # Prepare contrast message
     if std_dev < 50:
-        print("The image has low contrast.")
+        contrast_message = f"Low contrast image (Standard Deviation: {std_dev:.2f})"
     else:
-        print("The image has high contrast.")
-
-    return std_dev
+        contrast_message = f"High contrast image (Standard Deviation: {std_dev:.2f})"
+    
+    return std_dev, fig, contrast_message

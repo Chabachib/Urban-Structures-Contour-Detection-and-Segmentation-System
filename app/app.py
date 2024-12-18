@@ -34,7 +34,13 @@ if uploaded_file:
         st.markdown("### Feature Extraction")
         noise_result = noise_variance(grayscale_image)
         sp_result = detect_salt_and_pepper(grayscale_image)
-        st.write(noise_result)
-        st.write(sp_result)
+        std_dev, hist_fig, contrast_message = type_contrast(grayscale_image)
+        col1, col2 = st.columns(2)
+        with col1:
+            st.write(noise_result)
+            st.write(sp_result)
+            st.write(contrast_message)
+        with col2:
+            st.pyplot(hist_fig)
 
 
