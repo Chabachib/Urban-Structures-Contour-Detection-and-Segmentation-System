@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def adaptive_gaussian_filter(image, max_kernel_size=11, max_sigma=10):
+def adaptive_gaussian_filter(image, max_kernel_size, max_sigma):
     """
     Apply an adaptive Gaussian filter to an image.
 

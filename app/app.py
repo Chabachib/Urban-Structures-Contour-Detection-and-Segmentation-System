@@ -1,26 +1,34 @@
 import streamlit as st
+import cv2
 from PIL import Image
 import numpy as np
 from functions.noise_filters import bilateral_filter, low_pass_filter, median_filter, gaussian_filter
 from functions.thresholding import adaptive_gaussian_filter
 
+# page_bg_img = '''
+# <style>
+# .stApp {
+#     background-image: url("https://your-image-url.jpg");
+#     background-size: cover;
+# }
+# </style>
+# '''
+
+# st.markdown(page_bg_img, unsafe_allow_html=True)
+st.set_page_config(layout="wide")
 st.title("Welcome to the Urban Structure Segmentation System")
 
 # File uploader
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
-    # Load the image
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    st.image(image, caption="Uploaded Image", width=250)
 
-    # Add the "Segment" button
     if st.button("Segment"):
-        # Convert the image to a NumPy array for processing
         image_array = np.array(image)
+        grayscale_image = cv2.cvtColor(image_array, cv2.COLOR_RGB2GRAY)
+        st.image(grayscale_image,caption="Grayscale Image", width=250)
+        # ****************** Feature Extraction Section ******************
+        
 
-        # Apply filters (example sequence)
-        image_filtered = median_filter(image_array,3)
-
-        # Display the processed image
-        st.image(image_filtered, caption="Segmented Image", use_column_width=True)
