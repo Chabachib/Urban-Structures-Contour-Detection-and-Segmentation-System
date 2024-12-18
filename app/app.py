@@ -4,6 +4,7 @@ from PIL import Image
 import numpy as np
 from functions.noise_filters import bilateral_filter, low_pass_filter, median_filter, gaussian_filter
 from functions.thresholding import adaptive_gaussian_filter
+from functions.feature_extraction import noise_variance, detect_salt_and_pepper, type_contrast
 
 # page_bg_img = '''
 # <style>
@@ -30,5 +31,10 @@ if uploaded_file:
         grayscale_image = cv2.cvtColor(image_array, cv2.COLOR_RGB2GRAY)
         st.image(grayscale_image,caption="Grayscale Image", width=250)
         # ****************** Feature Extraction Section ******************
-        
+        st.markdown("### Feature Extraction")
+        noise_result = noise_variance(grayscale_image)
+        sp_result = detect_salt_and_pepper(grayscale_image)
+        st.write(noise_result)
+        st.write(sp_result)
+
 
