@@ -4,7 +4,7 @@ from PIL import Image
 import numpy as np
 from functions.noise_filters import bilateral_filter, low_pass_filter, median_filter, gaussian_filter
 from functions.thresholding import adaptive_gaussian_filter
-from functions.feature_extraction import noise_variance, detect_salt_and_pepper, type_contrast
+from functions.feature_extraction import noise_variance, detect_salt_and_pepper, type_contrast, noise_characteristics
 
 # page_bg_img = '''
 # <style>
@@ -43,4 +43,25 @@ if uploaded_file:
         with col2:
             st.pyplot(hist_fig)
 
+        noise_results = noise_characteristics(grayscale_image)
+    
+        st.write("### Noise Analysis Results")
+        
+        # Create two columns for better layout
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.write("#### Statistical Metrics")
+            st.write(f"RMS: {noise_results['RMS']}")
+            st.write(f"Standard Deviation: {noise_results['Standard Deviation']}")
+            st.write(f"Coefficient of Variation: {noise_results['Coefficient of Variation']}")
+        
+        with col2:
+            st.write("#### Distribution Metrics")
+            st.write(f"Skewness: {noise_results['Skewness']}")
+            st.write(f"Kurtosis: {noise_results['Kurtosis']}")
+        
+        st.write("#### Analysis")
+        st.write(f"Likely Noise Type: {noise_results['Likely Noise Type']}")
+        st.write(f"Suggested Filter: {noise_results['Filter Suggestion']}")
 

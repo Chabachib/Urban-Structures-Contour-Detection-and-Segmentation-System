@@ -1,3 +1,2 @@
-from .noise_variance import noise_variance
-from .salt_pepper import detect_salt_and_pepper
-from .type_contrast import type_contrast
+from .contrast_analysis import type_contrast
+from .noise_analysis import gaussian_noise_variance, impulsive_noise_variance
